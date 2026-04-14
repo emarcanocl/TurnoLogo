@@ -2,8 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0f1923">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Registro de Días Trabajados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
@@ -34,6 +37,1155 @@
     overflow-x: hidden;
   }
 
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+  }
+  .logo span { color: var(--text); }
+
+  .header-actions { display: flex; gap: 10px; }
+
+  .btn-icon {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    transition: all .2s;
+  }
+  .btn-icon:hover, .btn-icon:active { border-color: var(--accent); color: var(--accent); }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    flex: 1;
+    min-width: 80px;
+    padding: 14px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: var(--text2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+  }
+  .tab.active { color: var(--accent); border-color: var(--accent); }
+
+  /* MAIN CONTENT */
+  main { padding: 20px; max-width: 500px; margin: 0 auto; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 16px;
+  }
+
+  /* FORM ELEMENTS */
+  label {
+    display: block;
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 6px;
+    font-weight: 600;
+    letter-spacing: .3px;
+  }
+
+  input[type="date"], input[type="text"], input[type="number"], select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 15px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7); }
+
+  .form-row { margin-bottom: 14px; }
+
+  /* TYPE SELECTOR */
+  .type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .type-btn {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: var(--font-display);
+  }
+
+  .type-btn .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .type-btn .label { font-size: 10px; font-weight: 600; color: var(--text2); letter-spacing: .3px; }
+
+  .type-btn.selected { border-color: var(--accent); background: rgba(0,212,255,.1); }
+  .type-btn.selected .label { color: var(--accent); }
+
+  /* BONUSES */
+  .bonus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .bonus-toggle {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all .2s;
+  }
+  .bonus-toggle .b-icon { font-size: 16px; }
+  .bonus-toggle .b-text { flex: 1; }
+  .bonus-toggle .b-name { font-size: 11px; font-weight: 600; color: var(--text2); }
+  .bonus-toggle .b-amount { font-size: 10px; font-family: var(--font-mono); color: var(--text2); }
+  .bonus-toggle .b-check { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+
+  .bonus-toggle.active { border-color: var(--green); background: rgba(0,230,118,.08); }
+  .bonus-toggle.active .b-name { color: var(--green); }
+  .bonus-toggle.active .b-amount { color: var(--green); }
+  .bonus-toggle.active .b-check { border-color: var(--green); background: var(--green); color: var(--bg); }
+
+  /* SAVE BUTTON */
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: all .2s;
+    text-transform: uppercase;
+  }
+  .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* SUMMARY STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .stat-value.money { color: var(--green); font-size: 16px; }
+  .stat-label { font-size: 10px; color: var(--text2); font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+
+  /* FILTER */
+  .filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  /* RECORDS LIST */
+  .record-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .record-item.habil { border-left: 3px solid var(--accent); }
+  .record-item.sabado { border-left: 3px solid var(--yellow); }
+  .record-item.domingo { border-left: 3px solid var(--accent2); }
+  .record-item.feriado { border-left: 3px solid var(--red); }
+
+  .record-date { font-family: var(--font-mono); font-size: 13px; color: var(--text2); }
+  .record-type-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+  .badge-habil { background: rgba(0,212,255,.15); color: var(--accent); }
+  .badge-sabado { background: rgba(255,215,64,.15); color: var(--yellow); }
+  .badge-domingo { background: rgba(255,107,53,.15); color: var(--accent2); }
+  .badge-feriado { background: rgba(255,82,82,.15); color: var(--red); }
+
+  .record-info { flex: 1; }
+  .record-bonuses { font-size: 10px; color: var(--text2); margin-top: 3px; }
+
+  .record-amount {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    text-align: right;
+  }
+
+  .record-actions { display: flex; gap: 6px; }
+  .btn-del {
+    background: none;
+    border: none;
+    color: var(--text2);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: color .2s;
+  }
+  .btn-del:hover { color: var(--red); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text2);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-size: 14px; }
+
+  /* SETTINGS */
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { font-size: 14px; font-weight: 600; }
+  .settings-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  .settings-input {
+    width: 130px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 10px;
+    outline: none;
+    text-align: right;
+    transition: border-color .2s;
+  }
+  .settings-input:focus { border-color: var(--accent); }
+
+  /* DRIVE SECTION */
+  .drive-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 10px;
+    font-family: var(--font-display);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .drive-btn:hover { border-color: var(--accent); }
+  .drive-btn .d-icon { font-size: 24px; }
+  .drive-btn .d-text { flex: 1; text-align: left; }
+  .drive-btn .d-sub { font-size: 11px; color: var(--text2); font-weight: 400; margin-top: 2px; }
+  .drive-btn .d-arrow { color: var(--text2); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    z-index: 999;
+    transition: transform .3s ease;
+    white-space: nowrap;
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: var(--green); color: var(--green); }
+  .toast.error { border-color: var(--red); color: var(--red); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.7);
+    display: flex; align-items: flex-end;
+    z-index: 200;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px 40px;
+    width: 100%;
+    transform: translateY(100%);
+    transition: transform .3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+
+  /* Drive status */
+  .drive-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .drive-status.connected { background: rgba(0,230,118,.1); color: var(--green); border: 1px solid rgba(0,230,118,.3); }
+  .drive-status.disconnected { background: rgba(255,82,82,.1); color: var(--red); border: 1px solid rgba(255,82,82,.3); }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+  /* Confirmation modal */
+  .confirm-btns { display: flex; gap: 10px; margin-top: 20px; }
+  .btn-confirm-yes { flex: 1; background: var(--red); color: #fff; border: none; border-radius: 10px; padding: 14px; font-family: var(--font-display); font-size: 14px; font-weight: 700; cursor: pointer; }
+  .btn-confirm-no { flex: 1; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 14px; font-family: var(--font-display); font-size: 14px; font-weight: 700; cursor: pointer; }
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* Progress animation */
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+  .loading { animation: pulse 1s infinite; }
+
+  /* Pill tag */
+  .pill {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-right: 3px;
+    margin-top: 3px;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+  .pill-rain { background: rgba(0,212,255,.15); color: var(--accent); }
+  .pill-double { background: rgba(255,215,64,.15); color: var(--yellow); }
+  .pill-sat { background: rgba(255,215,64,.15); color: var(--yellow); }
+  .pill-sun { background: rgba(255,107,53,.15); color: var(--accent2); }
+  .pill-hol { background: rgba(255,82,82,.15); color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">TURNO<span>LOG</span></div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="openDriveModal()" title="Google Drive">☁️</button>
+    <button class="btn-icon" onclick="switchTab('ajustes')" title="Ajustes">⚙️</button>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <div class="tab active" onclick="switchTab('registrar')" id="tab-registrar">＋ Registrar</div>
+  <div class="tab" onclick="switchTab('historial')" id="tab-historial">📋 Historial</div>
+  <div class="tab" onclick="switchTab('resumen')" id="tab-resumen">📊 Resumen</div>
+  <div class="tab" onclick="switchTab('ajustes')" id="tab-ajustes">⚙️ Ajustes</div>
+</div>
+
+<main>
+
+<!-- ===================== REGISTRAR ===================== -->
+<div class="section active" id="sec-registrar">
+
+  <div class="card">
+    <div class="card-title">Fecha del turno</div>
+    <div class="form-row">
+      <label>Selecciona la fecha</label>
+      <input type="date" id="input-fecha">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tipo de día</div>
+    <div class="type-grid">
+      <div class="type-btn selected" onclick="selectType('habil')" id="type-habil">
+        <span class="icon">📅</span>
+        <span class="label">Hábil</span>
+      </div>
+      <div class="type-btn" onclick="selectType('sabado')" id="type-sabado">
+        <span class="icon">🌤️</span>
+        <span class="label">Sábado</span>
+      </div>
+      <div class="type-btn" onclick="selectType('domingo')" id="type-domingo">
+        <span class="icon">🌞</span>
+        <span class="label">Domingo</span>
+      </div>
+      <div class="type-btn" onclick="selectType('feriado')" id="type-feriado">
+        <span class="icon">🎉</span>
+        <span class="label">Feriado</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Bonos adicionales</div>
+    <div class="bonus-grid">
+      <div class="bonus-toggle" onclick="toggleBonus('bono_sabado')" id="bonus-bono_sabado">
+        <span class="b-icon">🌤️</span>
+        <div class="b-text">
+          <div class="b-name">Bono Sábado</div>
+          <div class="b-amount" id="amt-bono_sabado">$5.000</div>
+        </div>
+        <div class="b-check">✓</div>
+      </div>
+      <div class="bonus-toggle" onclick="toggleBonus('bono_domingo')" id="bonus-bono_domingo">
+        <span class="b-icon">🌞</span>
+        <div class="b-text">
+          <div class="b-name">Bono Domingo</div>
+          <div class="b-amount" id="amt-bono_domingo">$15.000</div>
+        </div>
+        <div class="b-check">✓</div>
+      </div>
+      <div class="bonus-toggle" onclick="toggleBonus('bono_feriado')" id="bonus-bono_feriado">
+        <span class="b-icon">🎉</span>
+        <div class="b-text">
+          <div class="b-name">Feriado</div>
+          <div class="b-amount" id="amt-bono_feriado">$15.000</div>
+        </div>
+        <div class="b-check">✓</div>
+      </div>
+      <div class="bonus-toggle" onclick="toggleBonus('bono_doble')" id="bonus-bono_doble">
+        <span class="b-icon">⚡</span>
+        <div class="b-text">
+          <div class="b-name">Doble Turno</div>
+          <div class="b-amount" id="amt-bono_doble">$20.000</div>
+        </div>
+        <div class="b-check">✓</div>
+      </div>
+      <div class="bonus-toggle" onclick="toggleBonus('bono_lluvia')" id="bonus-bono_lluvia">
+        <span class="b-icon">🌧️</span>
+        <div class="b-text">
+          <div class="b-name">Lluvia</div>
+          <div class="b-amount" id="amt-bono_lluvia">$20.000</div>
+        </div>
+        <div class="b-check">✓</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Total estimado del día</div>
+      <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--green)" id="preview-total">$52.500</div>
+    </div>
+
+    <button class="btn-primary" onclick="guardarRegistro()">💾 Guardar Turno</button>
+  </div>
+
+</div>
+
+<!-- ===================== HISTORIAL ===================== -->
+<div class="section" id="sec-historial">
+
+  <div class="card">
+    <div class="card-title">Filtrar por período</div>
+    <div class="filter-row">
+      <div>
+        <label>Desde</label>
+        <input type="date" id="filter-desde" onchange="renderHistorial()">
+      </div>
+      <div>
+        <label>Hasta</label>
+        <input type="date" id="filter-hasta" onchange="renderHistorial()">
+      </div>
+    </div>
+    <button class="btn-secondary" onclick="clearFilters()">Limpiar filtros</button>
+  </div>
+
+  <div class="stats-grid" id="hist-stats" style="display:none">
+    <div class="stat-card">
+      <div class="stat-value" id="hist-count">0</div>
+      <div class="stat-label">Días trabajados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value money" id="hist-total">$0</div>
+      <div class="stat-label">Total período</div>
+    </div>
+  </div>
+
+  <div id="lista-historial"></div>
+</div>
+
+<!-- ===================== RESUMEN ===================== -->
+<div class="section" id="sec-resumen">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="res-total-dias">0</div>
+      <div class="stat-label">Total días</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value money" id="res-total-monto">$0</div>
+      <div class="stat-label">Total acumulado</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Desglose por tipo</div>
+    <div id="breakdown-list"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Mes actual</div>
+    <div id="mes-actual-stats"></div>
+  </div>
+</div>
+
+<!-- ===================== AJUSTES ===================== -->
+<div class="section" id="sec-ajustes">
+
+  <div class="card">
+    <div class="card-title">💰 Montos base</div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Día hábil</div>
+        <div class="settings-sub">Valor base por jornada</div>
+      </div>
+      <input type="number" class="settings-input" id="set-base" value="52500" onchange="saveSettings()">
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Bono Sábado</div>
+      </div>
+      <input type="number" class="settings-input" id="set-bono_sabado" value="5000" onchange="saveSettings()">
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Bono Domingo</div>
+      </div>
+      <input type="number" class="settings-input" id="set-bono_domingo" value="15000" onchange="saveSettings()">
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Bono Feriado</div>
+      </div>
+      <input type="number" class="settings-input" id="set-bono_feriado" value="15000" onchange="saveSettings()">
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Bono Doble Turno</div>
+      </div>
+      <input type="number" class="settings-input" id="set-bono_doble" value="20000" onchange="saveSettings()">
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">Bono Lluvia</div>
+      </div>
+      <input type="number" class="settings-input" id="set-bono_lluvia" value="20000" onchange="saveSettings()">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🗑️ Datos</div>
+    <button class="btn-secondary" style="border-color:var(--red);color:var(--red)" onclick="confirmDelete()">Eliminar todos los registros</button>
+  </div>
+
+</div>
+
+</main>
+
+<!-- DRIVE MODAL -->
+<div class="modal-overlay" id="drive-modal">
+  <div class="modal">
+    <div class="modal-title">☁️ Google Drive</div>
+
+    <div id="drive-status-bar" class="drive-status disconnected">
+      <div class="dot"></div>
+      <span>No conectado a Google Drive</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px;">
+      Para sincronizar con Google Drive debes autorizar el acceso. Los datos se guardan como archivo JSON en tu Drive personal.
+    </p>
+
+    <button class="drive-btn" onclick="connectDrive()">
+      <span class="d-icon">🔑</span>
+      <div class="d-text">
+        <div>Conectar Google Drive</div>
+        <div class="d-sub">Autorizar acceso a tu cuenta</div>
+      </div>
+      <span class="d-arrow">›</span>
+    </button>
+
+    <button class="drive-btn" onclick="exportToDrive()">
+      <span class="d-icon">⬆️</span>
+      <div class="d-text">
+        <div>Exportar a Drive</div>
+        <div class="d-sub">Subir registros actuales</div>
+      </div>
+      <span class="d-arrow">›</span>
+    </button>
+
+    <button class="drive-btn" onclick="importFromDrive()">
+      <span class="d-icon">⬇️</span>
+      <div class="d-text">
+        <div>Importar desde Drive</div>
+        <div class="d-sub">Cargar registros guardados</div>
+      </div>
+      <span class="d-arrow">›</span>
+    </button>
+
+    <button class="drive-btn" onclick="exportJSON()">
+      <span class="d-icon">📄</span>
+      <div class="d-text">
+        <div>Descargar como JSON</div>
+        <div class="d-sub">Backup local en tu dispositivo</div>
+      </div>
+      <span class="d-arrow">›</span>
+    </button>
+
+    <div class="divider"></div>
+    <button class="btn-secondary" onclick="closeDriveModal()">Cerrar</button>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <div class="modal-title">⚠️ Confirmar eliminación</div>
+    <p style="font-size:14px;color:var(--text2);line-height:1.6">
+      ¿Seguro que quieres eliminar <strong style="color:var(--text)">todos los registros</strong>? Esta acción no se puede deshacer.
+    </p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirmModal()">Cancelar</button>
+      <button class="btn-confirm-yes" onclick="deleteAll()">Eliminar todo</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let registros = [];
+let settings = {
+  base: 52500,
+  bono_sabado: 5000,
+  bono_domingo: 15000,
+  bono_feriado: 15000,
+  bono_doble: 20000,
+  bono_lluvia: 20000
+};
+
+let selectedType = 'habil';
+let activeBonuses = new Set();
+let deleteTargetId = null;
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  setTodayDate();
+  renderBonusAmounts();
+  updatePreview();
+});
+
+function setTodayDate() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('input-fecha').value = today;
+  // Default filter: current month
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('filter-desde').value = `${y}-${m}-01`;
+  document.getElementById('filter-hasta').value = today;
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+function loadData() {
+  try {
+    const r = localStorage.getItem('turno_registros');
+    const s = localStorage.getItem('turno_settings');
+    if (r) registros = JSON.parse(r);
+    if (s) {
+      settings = { ...settings, ...JSON.parse(s) };
+      // Apply to inputs
+      Object.keys(settings).forEach(k => {
+        const el = document.getElementById('set-' + k);
+        if (el) el.value = settings[k];
+      });
+    }
+  } catch(e) {}
+  renderBonusAmounts();
+}
+
+function saveData() {
+  localStorage.setItem('turno_registros', JSON.stringify(registros));
+}
+
+function saveSettings() {
+  settings.base = parseInt(document.getElementById('set-base').value) || 52500;
+  ['bono_sabado','bono_domingo','bono_feriado','bono_doble','bono_lluvia'].forEach(k => {
+    settings[k] = parseInt(document.getElementById('set-'+k).value) || 0;
+  });
+  localStorage.setItem('turno_settings', JSON.stringify(settings));
+  renderBonusAmounts();
+  updatePreview();
+  showToast('Ajustes guardados ✓', 'success');
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('sec-' + tab).classList.add('active');
+  if (tab === 'historial') renderHistorial();
+  if (tab === 'resumen') renderResumen();
+}
+
+// ============================================================
+// FORM - TYPE
+// ============================================================
+function selectType(type) {
+  selectedType = type;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('type-' + type).classList.add('selected');
+  updatePreview();
+}
+
+// ============================================================
+// FORM - BONUSES
+// ============================================================
+function toggleBonus(key) {
+  if (activeBonuses.has(key)) {
+    activeBonuses.delete(key);
+    document.getElementById('bonus-' + key).classList.remove('active');
+  } else {
+    activeBonuses.add(key);
+    document.getElementById('bonus-' + key).classList.add('active');
+  }
+  updatePreview();
+}
+
+function renderBonusAmounts() {
+  const map = { bono_sabado: 'bono_sabado', bono_domingo: 'bono_domingo', bono_feriado: 'bono_feriado', bono_doble: 'bono_doble', bono_lluvia: 'bono_lluvia' };
+  Object.entries(map).forEach(([k, sk]) => {
+    const el = document.getElementById('amt-' + k);
+    if (el) el.textContent = '$' + formatNum(settings[sk]);
+  });
+}
+
+// ============================================================
+// PREVIEW
+// ============================================================
+function updatePreview() {
+  const total = calcTotal(selectedType, activeBonuses);
+  document.getElementById('preview-total').textContent = '$' + formatNum(total);
+}
+
+function calcTotal(type, bonuses) {
+  let total = settings.base;
+  bonuses.forEach(b => {
+    if (settings[b]) total += settings[b];
+  });
+  return total;
+}
+
+// ============================================================
+// GUARDAR
+// ============================================================
+function guardarRegistro() {
+  const fecha = document.getElementById('input-fecha').value;
+  if (!fecha) { showToast('Selecciona una fecha', 'error'); return; }
+
+  // Check duplicate
+  if (registros.find(r => r.fecha === fecha)) {
+    showToast('Ya existe un registro para esa fecha', 'error');
+    return;
+  }
+
+  const bonuses = [...activeBonuses];
+  const total = calcTotal(selectedType, activeBonuses);
+
+  const registro = {
+    id: Date.now(),
+    fecha,
+    tipo: selectedType,
+    bonuses,
+    total,
+    snapshot: { ...settings }
+  };
+
+  registros.push(registro);
+  registros.sort((a,b) => b.fecha.localeCompare(a.fecha));
+  saveData();
+
+  // Reset bonuses
+  activeBonuses.clear();
+  document.querySelectorAll('.bonus-toggle').forEach(b => b.classList.remove('active'));
+  updatePreview();
+
+  showToast('Turno guardado ✓', 'success');
+}
+
+// ============================================================
+// HISTORIAL
+// ============================================================
+function renderHistorial() {
+  const desde = document.getElementById('filter-desde').value;
+  const hasta = document.getElementById('filter-hasta').value;
+
+  let filtered = registros.filter(r => {
+    if (desde && r.fecha < desde) return false;
+    if (hasta && r.fecha > hasta) return false;
+    return true;
+  });
+
+  const lista = document.getElementById('lista-historial');
+  const statsEl = document.getElementById('hist-stats');
+
+  if (filtered.length === 0) {
+    statsEl.style.display = 'none';
+    lista.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No hay registros en este período</div></div>`;
+    return;
+  }
+
+  statsEl.style.display = 'grid';
+  const totalMonto = filtered.reduce((s, r) => s + r.total, 0);
+  document.getElementById('hist-count').textContent = filtered.length;
+  document.getElementById('hist-total').textContent = '$' + formatNum(totalMonto);
+
+  lista.innerHTML = filtered.map(r => renderRecord(r)).join('');
+}
+
+function renderRecord(r) {
+  const fecha = formatFecha(r.fecha);
+  const badges = { habil: 'badge-habil', sabado: 'badge-sabado', domingo: 'badge-domingo', feriado: 'badge-feriado' };
+  const labels = { habil: 'Hábil', sabado: 'Sábado', domingo: 'Domingo', feriado: 'Feriado' };
+  const bonusPills = r.bonuses.map(b => {
+    const pillMap = { bono_sabado: 'pill-sat', bono_domingo: 'pill-sun', bono_feriado: 'pill-hol', bono_doble: 'pill-double', bono_lluvia: 'pill-rain' };
+    const nameMap = { bono_sabado: 'Sáb', bono_domingo: 'Dom', bono_feriado: 'Feriado', bono_doble: 'Doble', bono_lluvia: 'Lluvia' };
+    return `<span class="pill ${pillMap[b]||''}">${nameMap[b]||b}</span>`;
+  }).join('');
+
+  return `
+    <div class="record-item ${r.tipo}" id="rec-${r.id}">
+      <div class="record-info" style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span class="record-date">${fecha}</span>
+          <span class="record-type-badge ${badges[r.tipo]||''}">${labels[r.tipo]||r.tipo}</span>
+        </div>
+        ${bonusPills ? `<div class="record-bonuses">${bonusPills}</div>` : ''}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="record-amount">$${formatNum(r.total)}</div>
+        <button class="btn-del" onclick="deleteRecord(${r.id})">✕</button>
+      </div>
+    </div>
+  `;
+}
+
+function deleteRecord(id) {
+  registros = registros.filter(r => r.id !== id);
+  saveData();
+  renderHistorial();
+  if (document.getElementById('sec-resumen').classList.contains('active')) renderResumen();
+  showToast('Registro eliminado', 'success');
+}
+
+function clearFilters() {
+  document.getElementById('filter-desde').value = '';
+  document.getElementById('filter-hasta').value = '';
+  renderHistorial();
+}
+
+// ============================================================
+// RESUMEN
+// ============================================================
+function renderResumen() {
+  const totalDias = registros.length;
+  const totalMonto = registros.reduce((s,r) => s+r.total, 0);
+
+  document.getElementById('res-total-dias').textContent = totalDias;
+  document.getElementById('res-total-monto').textContent = '$' + formatNum(totalMonto);
+
+  // Breakdown by type
+  const types = { habil: { label: 'Hábil', icon: '📅', count: 0, total: 0 }, sabado: { label: 'Sábado', icon: '🌤️', count: 0, total: 0 }, domingo: { label: 'Domingo', icon: '🌞', count: 0, total: 0 }, feriado: { label: 'Feriado', icon: '🎉', count: 0, total: 0 } };
+
+  registros.forEach(r => {
+    if (types[r.tipo]) {
+      types[r.tipo].count++;
+      types[r.tipo].total += r.total;
+    }
+  });
+
+  const bk = document.getElementById('breakdown-list');
+  bk.innerHTML = Object.entries(types).filter(([,v]) => v.count > 0).map(([,v]) => `
+    <div class="settings-row">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">${v.icon}</span>
+        <div>
+          <div class="settings-label">${v.label}</div>
+          <div class="settings-sub">${v.count} día${v.count!==1?'s':''}</div>
+        </div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--green)">$${formatNum(v.total)}</div>
+    </div>
+  `).join('') || '<div style="color:var(--text2);font-size:13px;padding:10px 0">Sin registros aún</div>';
+
+  // Current month
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const mesRecs = registros.filter(r => r.fecha.startsWith(`${y}-${m}`));
+  const mesMonto = mesRecs.reduce((s,r) => s+r.total, 0);
+
+  document.getElementById('mes-actual-stats').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:13px;color:var(--text2)">Días trabajados</div>
+        <div style="font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--accent)">${mesRecs.length}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:13px;color:var(--text2)">Monto generado</div>
+        <div style="font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--green)">$${formatNum(mesMonto)}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// DELETE ALL
+// ============================================================
+function confirmDelete() {
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirmModal() {
+  document.getElementById('confirm-modal').classList.remove('open');
+}
+function deleteAll() {
+  registros = [];
+  saveData();
+  closeConfirmModal();
+  showToast('Todos los registros eliminados', 'success');
+  renderHistorial();
+}
+
+// ============================================================
+// DRIVE MODAL
+// ============================================================
+function openDriveModal() {
+  document.getElementById('drive-modal').classList.add('open');
+}
+function closeDriveModal() {
+  document.getElementById('drive-modal').classList.remove('open');
+}
+
+function connectDrive() {
+  // Google Drive OAuth flow - requires Google Identity Services
+  showToast('Abre el archivo en un navegador para conectar Drive', 'error');
+  // In a real app, you'd implement OAuth 2.0 here
+  // For Android, use WebView + Google Sign-In SDK
+}
+
+function exportToDrive() {
+  showToast('Exportando datos...', 'success');
+  exportJSON();
+}
+
+function importFromDrive() {
+  showToast('Usa "Importar JSON" desde tu archivo descargado', 'error');
+}
+
+function exportJSON() {
+  const data = {
+    exportDate: new Date().toISOString(),
+    settings,
+    registros
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `turnolog_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  closeDriveModal();
+  showToast('Archivo descargado ✓', 'success');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function formatNum(n) {
+  return new Intl.NumberFormat('es-CL').format(n);
+}
+
+function formatFecha(dateStr) {
+  const [y, m, d] = dateStr.split('-');
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const date = new Date(y, m-1, d);
+  return `${days[date.getDay()]} ${d} ${months[m-1]} ${y}`;
+}
+
+function showToast(msg, type='') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show ' + type;
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Close modals on overlay click
+document.getElementById('drive-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeDriveModal();
+});
+document.getElementById('confirm-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeConfirmModal();
+});
+
+// FULLSCREEN
+function requestFullscreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}
+document.addEventListener('click', function triggerFS() {
+  requestFullscreen();
+  document.removeEventListener('click', triggerFS);
+}, { once: true });
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) setTimeout(requestFullscreen, 1000);
+});
+document.addEventListener('webkitfullscreenchange', () => {
+  if (!document.webkitFullscreenElement) setTimeout(requestFullscreen, 1000);
+});
+</script>
+</body>
+</html>
   /* HEADER */
   header {
     background: var(--surface);
